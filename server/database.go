@@ -1,16 +1,23 @@
 package main
 
 import (
-	"fmt"
-	"gorm.io/driver/sqlserver"
-	"gorm.io/gorm"
+	"database/sql"
+	_ "github.com/microsoft/go-mssqldb"
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/dialect/mssqldialect"
+	"github.com/uptrace/bun/extra/bundebug"
 	"os"
 )
 
-func connectDB() *gorm.DB {
-	db, err := gorm.Open(sqlserver.Open(os.Getenv("DSN")), &gorm.Config{})
+func connectBun() *bun.DB {
+	sqldb, err := sql.Open("sqlserver", os.Getenv("DSN"))
 	if err != nil {
-		fmt.Println("Orrrrrr Nooooo")
+		panic(err)
 	}
+	db := bun.NewDB(sqldb, mssqldialect.New())
+	db.AddQueryHook(bundebug.NewQueryHook(
+		bundebug.WithVerbose(true),
+		bundebug.FromEnv("BUNDEBUG"),
+	))
 	return db
 }

@@ -1,14 +1,17 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+	"github.com/uptrace/bun"
+)
 
-type Contacts struct {
-	ID string `gorm:"column:id"`
-
-	FirstName     string         `gorm:"column:first_name"`
-	MiddleInitial sql.NullString `gorm:"column:mi"`
-	LastName      string         `gorm:"column:last_name"`
-	Title         sql.NullString `gorm:"column:title"`
-	EmailAddress  sql.NullString `gorm:"column:email_address"`
-	DirectPhone   sql.NullString `gorm:"column:direct_phone"`
+type Contact struct {
+	bun.BaseModel `bun:"table:contacts"`
+	ID            string         `bun:"id,pk"`
+	FirstName     string         `bun:"first_name"`
+	MiddleInitial sql.NullString `bun:"mi"`
+	LastName      string         `bun:"last_name"`
+	Title         sql.NullString `bun:"title"`
+	EmailAddress  sql.NullString `bun:"email_address"`
+	DirectPhone   sql.NullString `bun:"direct_phone"`
 }

@@ -5,18 +5,19 @@ import (
 	"fmt"
 	accountV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/account/v1"
 	"github.com/materials-resources/Service-Prophet/internal/database/models"
-	"gorm.io/gorm"
+	"github.com/uptrace/bun"
 )
 
 type Server struct {
 	accountV1.UnimplementedAccountServiceServer
-	DB *gorm.DB
+	DB *bun.DB
 }
 
 func (s *Server) GetContact(ctx context.Context, request *accountV1.GetContactRequest) (*accountV1.GetContactResponse, error) {
-	var contact models.Contacts
+	contact := new(models.Contact)
 
-	s.DB.Where("id = ?", request.GetId()).Take(&contact)
+	s.DB.NewSelect().Model(contact).Where("id = ?", request.GetId()).Scan(ctx)
+	fmt.Println(contact)
 	response := &accountV1.GetContactResponse{
 		Id:            contact.ID,
 		Title:         contact.Title.String,
@@ -29,10 +30,11 @@ func (s *Server) GetContact(ctx context.Context, request *accountV1.GetContactRe
 	return response, nil
 }
 
-func (s *Server) GetOrders(context.Context, *accountV1.GetOrdersRequest) (*accountV1.GetOrdersResponse, error) {
-	var customerWithOrders models.Customer
-	s.DB.Model(&models.Customer{}).Where("customer_id = ? AND company_id = ?", 100126, "MRS").Preload("Orders").Take(&customerWithOrders)
-	fmt.Println(customerWithOrders)
+func (s *Server) GetOrders(ctx context.Context, request *accountV1.GetOrdersRequest) (*accountV1.GetOrdersResponse, error) {
+	customer := new(models.Customer)
+	s.DB.NewSelect().Model(customer).Where("customer_id = ? AND company_id = ?", 100711, "MRS").Relation("Orders").Scan(ctx)
 
-	return nil, nil
+	response := &accountV1.GetOrdersResponse{}
+
+	return response, nil
 }

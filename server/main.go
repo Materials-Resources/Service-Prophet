@@ -24,7 +24,7 @@ func run() error {
 
 	server := grpc.NewServer()
 
-	database := connectDB()
+	database := connectBun()
 
 	accountV1.RegisterAccountServiceServer(server, &account.Server{DB: database})
 

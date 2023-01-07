@@ -1,17 +1,17 @@
 package models
 
-import "database/sql"
-
-func (Customer) TableName() string {
-	return "customer"
-}
+import (
+	"database/sql"
+	"github.com/uptrace/bun"
+)
 
 type Customer struct {
-	CustomerID      float32        `gorm:"column:customer_id;primaryKey"`
-	CompanyID       string         `gorm:"column:company_id;primaryKey"`
-	CustomerName    sql.NullString `gorm:"column:customer_name"`
-	CreditLimit     float32        `gorm:"column:credit_limit"`
-	CreditLimitUsed float32        `gorm:"column:credit_limit_used"`
+	bun.BaseModel   `bun:"table:customer"`
+	CustomerID      float64        `bun:"customer_id,pk"`
+	CompanyID       string         `bun:"company_id,pk"`
+	CustomerName    sql.NullString `bun:"customer_name"`
+	CreditLimit     float32        `bun:"credit_limit"`
+	CreditLimitUsed float32        `bun:"credit_limit_used"`
 
-	Orders []Order `gorm:"foreignKey:customer_id,company_id;references:customer_id,company_id;"`
+	Orders []*Order `bun:"rel:has-many,join:customer_id=customer_id,join_on:company_id=company_id"`
 }
