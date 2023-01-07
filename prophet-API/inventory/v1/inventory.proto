@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package inventory.v1;
+
+option go_package = "./inventory";
+
+service InventoryService{
+
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  rpc GetManyProducts(GetManyProductsRequest) returns (GetManyProductsResponse);
+  rpc PutProduct(PutProductRequest) returns (PutProductResponse);
+  //  rpc DeleteProduct() returns ();
+
+  rpc GetReceivingReport(GetReceivingReportRequest) returns (GetReceivingReportResponse);
+
+}
+
+message GetManyProductsRequest {
+  string supplier_id = 1;
+  string product_group = 2;
+}
+message PutProductRequest{
+  string description = 1;
+  string extended_description = 2;
+  int32 price1 = 3;
+  int32 price2 = 4;
+  int32 price3 = 5;
+  string product_group = 6;
+  string sales_group = 7;
+  string purchase_group = 8;
+  string tax_group = 9;
+  string replenishment_min = 10;
+  string replenishment_max = 11;
+  repeated SupplierDetails supplier_details = 12;
+}
+message GetProductRequest{
+  int32 inv_mast_id = 1; //uid of product that we want to get
+}
+message GetReceivingReportRequest {
+  int32 receipt_id = 1;
+}
+message SupplierDetails {
+  string supplier_id = 1;
+  int32 supplier_price = 2;
+  bool primary = 3;
+}
+
+message GetProductDetailedResponse{
+  message InvLoc {
+    string product_group_id = 1;
+    float qty_on_hand = 2;
+
+  }
+  string item_id = 1;  //products item ID usually formatted as MRS-XXX00-123456
+  string item_desc = 2; // short description of product such as a name of the item
+  string extended_desc = 3; //extended description of product
+  float price1 = 4;
+  float price2 = 5;
+  float price3 = 6;
+  repeated InvLoc inv_loc = 7;
+}
+message GetProductResponse{
+
+  string item_id = 1;  //products item ID usually formatted as MRS-XXX00-123456
+  string item_desc = 2; // short description of product such as a name of the item
+  string extended_desc = 3; //extended description of product
+  float  price1 = 4; // Sale Price of item
+
+}
+
+message GetManyProductsResponse {
+  repeated GetProductResponse products = 1; // List of product responses
+}
+
+message PutProductResponse{
+  string item_id = 1; // Returns itemId of new product
+}
+
+message GetReceivingReportResponse {
+  message Item {
+    message InventoryMaster {
+      string item_id = 1;
+      string item_desc = 2;
+    }
+    message AllocatedOrders {
+      int32 document_no = 1;
+      int32 qty_allocated = 2;
+    }
+    int32 quantity = 1;
+    string unit_of_measure = 2;
+    int32 inv_mast_id = 3;
+    InventoryMaster inventory_master = 4;
+    repeated AllocatedOrders allocated_orders = 5;
+  }
+
+  int32 receipt_number = 1;
+  repeated Item items = 2;
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package order.v1;
+
+option go_package = "./order";
+service OrderService{
+
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+  //  rpc PutOrder() returns ();
+
+  rpc GetPickTicket(GetPickTicketRequest) returns (GetPickTicketResponse);
+}
+
+message GetPickTicketRequest {
+  int32 pick_ticket_no = 1;
+}
+message GetOrderRequest{
+  string order_no = 1;
+  bool include_items = 2;
+}
+
+message GetOrderResponse{
+  message OrderItems {
+    int32 inv_mast_id = 1;
+    int32 qty_ordered = 2;
+    string unit = 3;
+    double sale_price = 4;
+  }
+  string order_no = 1;
+  string delivery_instructions = 2;
+  string ship2_name = 3;
+  string ship2_add1 = 4;
+  string ship2_add2 = 5;
+  string ship2_city = 6;
+  string ship2_state = 7;
+  string ship2_zip = 8;
+  string ship2_country = 9;
+  string po_no = 10;
+  string contact_id = 11;
+  string taker = 12;
+  repeated OrderItems order_items = 13;
+}
+
+message GetPickTicketResponse {
+  int32 pick_ticket_no = 1;
+  string order_no = 2;
+}
+message Order {
+  string order_no = 1;
+  string delivery_instructions = 2;
+  string ship2_name = 3;
+  string ship2_add1 = 4;
+  string ship2_add2 = 5;
+  string ship2_city = 6;
+  string ship2_state = 7;
+  string ship2_zip = 8;
+  string ship2_country = 9;
+
+}
