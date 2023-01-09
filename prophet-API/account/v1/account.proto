@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package account.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "./account";
 service AccountService{
   rpc GetContact(GetContactRequest) returns (GetContactResponse);

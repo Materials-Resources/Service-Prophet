@@ -27,6 +27,7 @@ func (s *Server) GetContact(ctx context.Context, request *accountV1.GetContactRe
 		EmailAddress:  contact.EmailAddress.String,
 		DirectPhone:   contact.DirectPhone.String,
 	}
+
 	return response, nil
 }
 
@@ -35,6 +36,16 @@ func (s *Server) GetOrders(ctx context.Context, request *accountV1.GetOrdersRequ
 	s.DB.NewSelect().Model(customer).Where("customer_id = ? AND company_id = ?", 100711, "MRS").Relation("Orders").Scan(ctx)
 
 	response := &accountV1.GetOrdersResponse{}
+
+	for _, orders := range customer.Orders {
+		response.Orders = append(response.Orders, &accountV1.GetOrdersResponse_Order{
+			OrderNo:    orders.OrderNo,
+			OrderDate:  orders.OrderDate.Time.String(),
+			Completed:  orders.Completed.String,
+			Approved:   orders.Approved.String,
+			DeleteFlag: orders.DeleteFlag,
+		})
+	}
 
 	return response, nil
 }

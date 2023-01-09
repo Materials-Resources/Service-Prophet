@@ -3,7 +3,11 @@ package main
 import (
 	"fmt"
 	accountV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/account/v1"
+	inventoryV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/inventory/v1"
+	orderV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/order/v1"
 	"github.com/materials-resources/Service-Prophet/internal/services/account"
+	"github.com/materials-resources/Service-Prophet/internal/services/inventory"
+	"github.com/materials-resources/Service-Prophet/internal/services/order"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -27,6 +31,8 @@ func run() error {
 	database := connectBun()
 
 	accountV1.RegisterAccountServiceServer(server, &account.Server{DB: database})
+	inventoryV1.RegisterInventoryServiceServer(server, &inventory.Server{DB: database})
+	orderV1.RegisterOrderServiceServer(server, &order.Server{DB: database})
 
 	reflection.Register(server)
 
