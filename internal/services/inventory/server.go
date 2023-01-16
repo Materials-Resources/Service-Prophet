@@ -4,6 +4,7 @@ import (
 	"context"
 	inventoryV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/inventory/v1"
 	"github.com/materials-resources/Service-Prophet/internal/database/models"
+	"github.com/materials-resources/Service-Prophet/internal/database/repositories/inventory"
 	"github.com/uptrace/bun"
 )
 
@@ -50,17 +51,16 @@ func (s *Server) GetProductsByGroup(ctx context.Context, request *inventoryV1.Ge
 
 func (s *Server) GetReceivingReport(ctx context.Context, request *inventoryV1.GetReceivingReportRequest) (*inventoryV1.GetReceivingReportResponse, error) {
 
-	//TODO finish allocated orders
+	//TODO finish allocated order
 	report := new(models.InventoryReceipt)
 
 	s.DB.NewSelect().Model(report).
 		Relation("InventoryReceiptItems").
-		Relation("InventoryReceiptItems.OrderTransactions ").
+		Relation("InventoryReceiptItems.OrderTransactions").
 		Where("receipt_number = ?", request.GetReceiptNumber()).
 		Scan(ctx)
-
 	response := &inventoryV1.GetReceivingReportResponse{
-		ReceiptNumber: report.ReceiptNumber,
+		ReceiptNumber: float32(report.ReceiptNumber),
 	}
 
 	for _, reportLine := range report.InventoryReceiptItems {
@@ -70,7 +70,7 @@ func (s *Server) GetReceivingReport(ctx context.Context, request *inventoryV1.Ge
 			InvMastId:     reportLine.InvMastUid,
 		}
 
-		for _, order := range item.AllocatedOrders {
+		for _, order := range reportLine.OrderTransactions {
 
 			item.AllocatedOrders = append(item.AllocatedOrders, &inventoryV1.GetReceivingReportResponse_Item_AllocatedOrders{
 				DocumentNo:   order.DocumentNo,
@@ -83,4 +83,11 @@ func (s *Server) GetReceivingReport(ctx context.Context, request *inventoryV1.Ge
 	}
 
 	return response, nil
+}
+
+func (s *Server) UpdateProductBySupplier(ctx context.Context, request *inventoryV1.UpdateProductBySupplierRequest) (response *inventoryV1.UpdateProductBySupplierResponse, err error) {
+
+	inventory.UpdateProductByPrimarySupplier(s.DB, ctx)
+
+	return response, err
 }

@@ -60,9 +60,12 @@ message Order {
 }
 
 message CreateOrderRequest {
+  double customer_id = 1;
+  double shipping_address_id = 2;
+  string po_no = 3;
 
-}
+ }
 
 message CreateOrderResponse {
-
+  string order_no = 1;
 }

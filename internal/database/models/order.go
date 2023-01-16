@@ -28,15 +28,15 @@ type Order struct {
 	ShipToState          sql.NullString `bun:"ship2_state"`
 	ShipToZip            sql.NullString `bun:"ship2_zip"`
 	ShipToCountry        sql.NullString `bun:"ship2_country"`
-	OeHdrUid             int            `bun:"oe_hdr_uid,unique"`
-	SourceCodeNo         int            `bun:"source_code_no"`
-	InvoiceBatchUid      int            `bun:"invoice_batch_uid,default:1"`
+	OeHdrUid             int32          `bun:"oe_hdr_uid,unique"`
+	SourceCodeNo         int32          `bun:"source_code_no"`
+	InvoiceBatchUid      int32          `bun:"invoice_batch_uid,default:1"`
 	FreightOut           float64        `bun:"freight_out,default:0"`
 	ExcludeRebates       string         `bun:"exclude_rebates"`
 	CaptureUsageDefault  string         `bun:"capture_usage_default"`
 	FrontCounterRma      string         `bun:"front_counter_rma,default:N"`
 	ProfitPercent        float64        `bun:"profit_percent,default:0"`
-	OrderCostBasis       int            `bun:"order_cost_basis,default:1"`
+	OrderCostBasis       int32          `bun:"order_cost_basis,default:1"`
 
 	Customer Customer `bun:"rel:has-one,join:customer_id=customer_id,join_on:company_id=company_id"`
 

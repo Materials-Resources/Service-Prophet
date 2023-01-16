@@ -5,9 +5,10 @@ import "github.com/uptrace/bun"
 type InvTran struct {
 	bun.BaseModel `bun:"table:inv_tran"`
 
-	TransactionNumber float64 `bun:"transaction_number,pk"`
-	SubDocumentNo     float64 `bun:"sub_document_no"`
-	InvMastUid        int     `bun:"inv_mast_uid"`
-	QtyAllocated      float64 `bun:"qty_allocated"`
-	DocumentNo        float64 `bun:"document_no"`
+	TransactionNumber float32 `bun:"transaction_number,pk"`
+	SubDocumentNo     int32   `bun:"sub_document_no"`
+	InvMastUid        int32   `bun:"inv_mast_uid"`
+	QtyAllocated      float32 `bun:"qty_allocated"`
+	DocumentNo        float32 `bun:"document_no"`
+	TransType         string  `bun:"trans_type"`
 }

@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	orderV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/order/v1"
 	"github.com/materials-resources/Service-Prophet/internal/database/models"
+	"github.com/materials-resources/Service-Prophet/internal/database/repositories/address"
+	"github.com/materials-resources/Service-Prophet/internal/database/repositories/order"
 	"github.com/uptrace/bun"
 	"time"
 )
@@ -47,34 +49,67 @@ func (s *Server) GetOrder(ctx context.Context, request *orderV1.GetOrderRequest)
 
 func (s *Server) CreateOrder(ctx context.Context, request *orderV1.CreateOrderRequest) (*orderV1.CreateOrderResponse, error) {
 
-	//TODO finish creat orders and identify how OrderNo is generated
-	order := &models.Order{
-		OrderNo:              "10000024",
-		OeHdrUid:             400000,
+	orderNo := new(string)
+	oeHdrUid := new(int32)
+
+	order.GetNewOrderNo(ctx, s.DB, orderNo)
+	order.GetNewOeHdrUid(ctx, s.DB, oeHdrUid)
+
+	shippingAddress := address.GetShippingAddress(ctx, s.DB, request.GetShippingAddressId())
+
+	newOrder := &models.Order{
+		OrderNo:              *orderNo,
+		OeHdrUid:             *oeHdrUid,
 		Approved:             sql.NullString{String: "N"},
 		ContactId:            sql.NullString{},
 		CompanyId:            "MRS",
 		Completed:            sql.NullString{String: "N"},
-		CustomerId:           100105,
+		CustomerId:           request.GetCustomerId(),
 		DeleteFlag:           "N",
 		DeliveryInstructions: sql.NullString{},
 		DateCreated:          time.Now(),
 		DateModified:         time.Now(),
 		OrderDate:            sql.NullTime{Time: time.Now()},
-		PoNo:                 sql.NullString{},
-		ShipToName:           sql.NullString{},
-		ShipToAdd1:           sql.NullString{},
-		ShipToAdd2:           sql.NullString{},
-		ShipToCity:           sql.NullString{},
-		ShipToState:          sql.NullString{},
-		ShipToZip:            sql.NullString{},
-		ShipToCountry:        sql.NullString{},
-		OrderLine:            nil,
+		PoNo: sql.NullString{
+			String: request.GetPoNo(),
+			Valid:  true,
+		},
+		ShipToName: sql.NullString{
+			String: shippingAddress.Name,
+			Valid:  true,
+		},
+		ShipToAdd1: sql.NullString{
+			String: shippingAddress.Line1,
+			Valid:  true,
+		},
+		ShipToAdd2: sql.NullString{
+			String: shippingAddress.Line2,
+			Valid:  true,
+		},
+		ShipToCity: sql.NullString{
+			String: shippingAddress.City,
+			Valid:  true,
+		},
+		ShipToState: sql.NullString{
+			String: shippingAddress.State,
+			Valid:  true,
+		},
+		ShipToZip: sql.NullString{
+			String: shippingAddress.PostalCode,
+			Valid:  true,
+		},
+		ShipToCountry: sql.NullString{
+			String: "",
+			Valid:  false,
+		},
+		OrderLine: nil,
 	}
 
-	s.DB.NewInsert().Model(order).Exec(ctx)
+	s.DB.NewInsert().Model(newOrder).Exec(ctx)
 
-	return nil, nil
+	return &orderV1.CreateOrderResponse{
+		OrderNo: newOrder.OrderNo,
+	}, nil
 }
 func (s *Server) GetPickTicket(ctx context.Context, request *orderV1.GetPickTicketRequest) (*orderV1.GetPickTicketResponse, error) {
 
