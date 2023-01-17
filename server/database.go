@@ -5,7 +5,6 @@ import (
 	_ "github.com/microsoft/go-mssqldb"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mssqldialect"
-	"github.com/uptrace/bun/extra/bundebug"
 	"os"
 )
 
@@ -15,9 +14,5 @@ func connectBun() *bun.DB {
 		panic(err)
 	}
 	db := bun.NewDB(sqldb, mssqldialect.New())
-	db.AddQueryHook(bundebug.NewQueryHook(
-		bundebug.WithVerbose(true),
-		bundebug.FromEnv("BUNDEBUG"),
-	))
 	return db
 }
