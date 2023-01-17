@@ -45,9 +45,9 @@ message GetProductDetailedResponse{
   string item_id = 1;  //products item ID usually formatted as MRS-XXX00-123456
   string item_desc = 2; // short description of product such as a name of the item
   string extended_desc = 3; //extended description of product
-  float price1 = 4;
-  float price2 = 5;
-  float price3 = 6;
+  double price1 = 4;
+  double price2 = 5;
+  double price3 = 6;
   repeated InvLoc inv_loc = 7;
 }
 message PutProductRequest{
@@ -74,7 +74,7 @@ message PutProductResponse{
 }
 
 message GetReceivingReportRequest {
-  float receipt_number = 1;
+  double receipt_number = 1;
 }
 
 message GetReceivingReportResponse {
@@ -84,17 +84,17 @@ message GetReceivingReportResponse {
       string item_desc = 2;
     }
     message AllocatedOrders {
-      float document_no = 1;
-      float qty_allocated = 2;
+      double document_no = 1;
+      double qty_allocated = 2;
     }
-    float quantity = 1;
+    double quantity = 1;
     string unit_of_measure = 2;
     int32 inv_mast_id = 3;
     InventoryMaster inventory_master = 4;
     repeated AllocatedOrders allocated_orders = 5;
   }
 
-  float receipt_number = 1;
+  double receipt_number = 1;
   repeated Item items = 2;
 }
 

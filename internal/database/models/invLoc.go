@@ -12,27 +12,27 @@ type InvLoc struct {
 	LocationId float32 `bun:"location_id,pk"`
 	CompanyId  string  `bun:"company_id,pk"`
 
-	QtyOnHand             float32
-	QtyInProcess          float32
+	QtyOnHand             float64
+	QtyInProcess          float64
 	DateCreated           time.Time
 	DateLastModified      time.Time
 	LastMaintainedBy      string
-	LastRecPo             float32
-	LastRecPoWithDisc     float32
+	LastRecPo             float64
+	LastRecPoWithDisc     float64
 	GlAccountNo           string
 	PurchOrTransfer       string
-	NextDueInPoCost       float32
+	NextDueInPoCost       float64
 	RevenueAccountNo      string
 	CosAccountNo          string
 	Sellable              string
-	MovingAverageCost     float32
-	StandardCost          float32
-	ProtectedStockQty     float32
-	InvMin                float32
-	InvMax                float32
+	MovingAverageCost     float64
+	StandardCost          float64
+	ProtectedStockQty     float64
+	InvMin                float64
+	InvMax                float64
 	Stockable             string
-	ReplenishmentLocation float32
-	AverageMonthlyUsage   float32
+	ReplenishmentLocation float64
+	AverageMonthlyUsage   float64
 	ProductGroupId        string `bun:"product_group_id"`
 	PurchaseDiscountGroup string
 	SalesDiscountGroup    string

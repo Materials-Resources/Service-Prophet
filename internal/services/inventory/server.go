@@ -60,7 +60,7 @@ func (s *Server) GetReceivingReport(ctx context.Context, request *inventoryV1.Ge
 		Where("receipt_number = ?", request.GetReceiptNumber()).
 		Scan(ctx)
 	response := &inventoryV1.GetReceivingReportResponse{
-		ReceiptNumber: float32(report.ReceiptNumber),
+		ReceiptNumber: report.ReceiptNumber,
 	}
 
 	for _, reportLine := range report.InventoryReceiptItems {

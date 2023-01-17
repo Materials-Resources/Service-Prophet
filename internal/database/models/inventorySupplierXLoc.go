@@ -11,7 +11,7 @@ type InventorySupplierXLoc struct {
 	bun.BaseModel              `bun:"table:inventory_supplier_x_loc"`
 	InventorySupplierXLocUid   int32           `bun:"inventory_supplier_x_loc_uid,pk"`
 	InventorySupplierUid       int32           `bun:"inventory_supplier_uid"`
-	LocationId                 float32         `bun:"location_id"`
+	LocationId                 float64         `bun:"location_id"`
 	PrimarySupplier            string          `bun:"primary_supplier"`
 	AverageLeadTime            int16           `bun:"average_lead_time"`
 	RowStatusFlag              int32           `bun:"row_status_flag"`
