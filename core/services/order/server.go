@@ -1,18 +1,19 @@
 package order
 
 import (
+	"buf.build/gen/go/materials-resources/prophet/grpc/go/order/v1/orderv1grpc"
+	orderV1 "buf.build/gen/go/materials-resources/prophet/protocolbuffers/go/order/v1"
 	"context"
 	"database/sql"
-	orderV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/order/v1"
-	"github.com/materials-resources/Service-Prophet/internal/database/models"
-	"github.com/materials-resources/Service-Prophet/internal/database/repositories/address"
-	"github.com/materials-resources/Service-Prophet/internal/database/repositories/order"
+	"github.com/materials-resources/Service-Prophet/core/database/models"
+	"github.com/materials-resources/Service-Prophet/core/database/repositories/address"
+	"github.com/materials-resources/Service-Prophet/core/database/repositories/order"
 	"github.com/uptrace/bun"
 	"time"
 )
 
 type Server struct {
-	orderV1.UnimplementedOrderServiceServer
+	orderv1grpc.UnimplementedOrderServiceServer
 	DB *bun.DB
 }
 

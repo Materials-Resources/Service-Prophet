@@ -2,12 +2,13 @@ syntax = "proto3";
 
 package inventory.v1;
 
-option go_package = "./inventory";
+option go_package = "./db-inventory";
 
 service InventoryService{
 
   rpc GetProduct(GetProductRequest) returns (GetProductResponse);
   rpc GetProductsByGroup(GetProductsByGroupRequest) returns (GetProductsByGroupResponse);
+  rpc GetProductGroups(GetProductGroupsRequest) returns (GetProductGroupsResponse);
 
   rpc GetReceivingReport(GetReceivingReportRequest) returns (GetReceivingReportResponse);
 
@@ -15,27 +16,54 @@ service InventoryService{
 
 }
 message GetProductRequest{
-  int32 inv_mast_id = 1; //uid of product that we want to get
+  int32 inv_mast_uid = 1; //uid of product that we want to get
 }
 message GetProductResponse{
-  string item_id = 1;  //products item ID usually formatted as MRS-XXX00-123456
-  string item_desc = 2; // short description of product such as a name of the item
-  string extended_desc = 3; //extended description of product
-  double  price1 = 4; // Sale Price of item
+  int32 inv_mast_uid = 1;
+  string item_id = 2;  //products item ID usually formatted as MRS-XXX00-123456
+  string item_desc = 3; // short description of product such as a name of the item
+  string extended_desc = 4; //extended description of product
+  string product_group_id = 5; //Product group it belongs to
+  double price = 6; //Default Price of item
+  double qty_available = 7;
 }
 
+
 message GetProductsByGroupRequest {
-  string product_group = 1;
-  int32 page = 2;
+  enum direction{
+    PREVIOUS = 0;
+    NEXT = 1;
+  }
+  repeated string product_group = 1;
+  int32 inv_mast_uid = 2;
+  direction page_direction= 3;
+  bool deleted = 4;
 }
 message GetProductsByGroupResponse {
-  message product {
-    string item_id = 1;  //products item ID usually formatted as MRS-XXX00-123456
-    string item_desc = 2; // short description of product such as a name of the item
-    string extended_desc = 3; //extended description of product
-    float  price1 = 4; // Sale Price of item
+  message Cursor {
+    int32 next_inv_mast_uid = 1;
+    int32 prev_inv_mast_uid = 2;
   }
-  repeated product products = 1; // List of product responses
+  message product {
+    int32 inv_mast_uid = 1;
+    string item_id = 2;  //products item ID usually formatted as MRS-XXX00-123456
+    string item_desc = 3; // short description of product such as a name of the item
+    string extended_desc = 4; //extended description of product
+    string product_group_id = 5;
+    float  price1 = 6; // Sale Price of item
+  }
+  Cursor cursor = 1;
+  repeated product products = 2; // List of product responses
+}
+message GetProductGroupsRequest{
+
+}
+message GetProductGroupsResponse{
+  message ProductGroup {
+    string product_group_id = 1;
+    string product_group_desc = 2;
+  }
+  repeated ProductGroup product_group = 1;
 }
 message GetProductDetailedResponse{
   message InvLoc {

@@ -1,9 +1,9 @@
-package inventory
+package db_inventory
 
 import (
 	"context"
 	"fmt"
-	"github.com/materials-resources/Service-Prophet/internal/database/models"
+	"github.com/materials-resources/Service-Prophet/core/database/models"
 	"github.com/uptrace/bun"
 )
 

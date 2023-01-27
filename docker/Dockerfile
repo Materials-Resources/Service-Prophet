@@ -12,7 +12,7 @@ RUN go build -v -o /usr/local/bin/app ./server/...
 
 
 FROM alpine as production
-
+EXPOSE 50058
 COPY --from=build /usr/local/bin/app /usr/local/bin/app
 
 CMD ["app"]

@@ -1,13 +1,13 @@
 package main
 
 import (
+	accountV1 "buf.build/gen/go/materials-resources/prophet/grpc/go/account/v1/accountv1grpc"
+	inventoryV1 "buf.build/gen/go/materials-resources/prophet/grpc/go/inventory/v1/inventoryv1grpc"
+	orderV1 "buf.build/gen/go/materials-resources/prophet/grpc/go/order/v1/orderv1grpc"
 	"fmt"
-	accountV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/account/v1"
-	inventoryV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/inventory/v1"
-	orderV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/order/v1"
-	"github.com/materials-resources/Service-Prophet/internal/services/account"
-	"github.com/materials-resources/Service-Prophet/internal/services/inventory"
-	"github.com/materials-resources/Service-Prophet/internal/services/order"
+	"github.com/materials-resources/Service-Prophet/core/services/account"
+	"github.com/materials-resources/Service-Prophet/core/services/inventory"
+	"github.com/materials-resources/Service-Prophet/core/services/order"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -20,7 +20,7 @@ func main() {
 	}
 }
 func run() error {
-	listenOn := "0.0.0.0:50057"
+	listenOn := "0.0.0.0:50058"
 	listener, err := net.Listen("tcp", listenOn)
 	if err != nil {
 		return fmt.Errorf("failed to start service on %s: %w", listenOn, err)

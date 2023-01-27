@@ -1,4 +1,4 @@
-package inventory
+package db_inventory
 
 func CreateNewProduct() {
 

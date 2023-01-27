@@ -1,15 +1,15 @@
 package account
 
 import (
+	"buf.build/gen/go/materials-resources/prophet/grpc/go/account/v1/accountv1grpc"
+	accountV1 "buf.build/gen/go/materials-resources/prophet/protocolbuffers/go/account/v1"
 	"context"
-	"fmt"
-	accountV1 "github.com/materials-resources/Service-Prophet/gen/proto/go/prophet-API/account/v1"
-	"github.com/materials-resources/Service-Prophet/internal/database/models"
+	"github.com/materials-resources/Service-Prophet/core/database/models"
 	"github.com/uptrace/bun"
 )
 
 type Server struct {
-	accountV1.UnimplementedAccountServiceServer
+	accountv1grpc.UnimplementedAccountServiceServer
 	DB *bun.DB
 }
 
@@ -17,7 +17,6 @@ func (s *Server) GetContact(ctx context.Context, request *accountV1.GetContactRe
 	contact := new(models.Contact)
 
 	s.DB.NewSelect().Model(contact).Where("id = ?", request.GetId()).Scan(ctx)
-	fmt.Println(contact)
 	response := &accountV1.GetContactResponse{
 		Id:            contact.ID,
 		Title:         contact.Title.String,
