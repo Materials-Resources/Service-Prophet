@@ -107,21 +107,10 @@ message GetReceivingReportRequest {
 
 message GetReceivingReportResponse {
   message Item {
-    message InventoryMaster {
-      string item_id = 1;
-      string item_desc = 2;
-    }
-    message AllocatedOrders {
-      double document_no = 1;
-      double qty_allocated = 2;
-    }
     double quantity = 1;
     string unit_of_measure = 2;
-    int32 inv_mast_id = 3;
-    InventoryMaster inventory_master = 4;
-    repeated AllocatedOrders allocated_orders = 5;
+    int32 inv_mast_uid = 3;
   }
-
   double receipt_number = 1;
   repeated Item items = 2;
 }

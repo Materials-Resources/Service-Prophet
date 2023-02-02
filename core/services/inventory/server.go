@@ -69,15 +69,7 @@ func (s *Server) GetReceivingReport(ctx context.Context, request *inventoryV1.Ge
 		item := &inventoryV1.GetReceivingReportResponse_Item{
 			Quantity:      reportLine.UnitQuantity,
 			UnitOfMeasure: reportLine.UnitOfMeasure,
-			InvMastId:     reportLine.InvMastUid,
-		}
-
-		for _, order := range reportLine.OrderTransactions {
-
-			item.AllocatedOrders = append(item.AllocatedOrders, &inventoryV1.GetReceivingReportResponse_Item_AllocatedOrders{
-				DocumentNo:   order.DocumentNo,
-				QtyAllocated: order.QtyAllocated,
-			})
+			InvMastUid:    reportLine.InvMastUid,
 		}
 
 		response.Items = append(response.Items, item)

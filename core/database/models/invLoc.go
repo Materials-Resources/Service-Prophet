@@ -48,6 +48,7 @@ type InvLoc struct {
 	PriceNine             float32 `bun:"price9"`
 	PriceTen              float32 `bun:"price10"`
 	ReplenishmentMethod   string
+	PrimaryBin            string `bun:"primary_bin"`
 
 	InvMast InvMast `bun:"rel:belongs-to,join:inv_mast_uid=inv_mast_uid"`
 }

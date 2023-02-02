@@ -15,6 +15,6 @@ func connectBun() *bun.DB {
 		panic(err)
 	}
 	db := bun.NewDB(sqldb, mssqldialect.New())
-	db.AddQueryHook(bundebug.NewQueryHook())
+	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
 	return db
 }

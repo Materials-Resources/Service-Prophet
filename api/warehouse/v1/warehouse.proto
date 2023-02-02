@@ -1,0 +1,23 @@
+syntax = 'proto3';
+
+package warehouse.v1;
+
+option go_package = "./warehouse";
+
+service WarehouseService{
+  rpc GetAllocatedOrdersForReceiptItem(GetAllocatedOrdersForReceiptItemRequest) returns (GetAllocatedOrdersForReceiptItemResponse);
+}
+
+message GetAllocatedOrdersForReceiptItemRequest{
+  float receipt_id = 1; // Receipt id to search for
+  int32 inv_mast_uid = 2; // Identifier of product
+  repeated string product_primary_bins = 3; // List of primary bins to filter products by. Helpful for only returning orders for nonstock
+}
+
+message GetAllocatedOrdersForReceiptItemResponse{
+  message AllocatedOrder {
+    string order_id = 1;
+    double qty_allocated = 2;
+  }
+  repeated AllocatedOrder allocated_orders = 1;
+}

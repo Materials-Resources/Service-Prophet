@@ -4,10 +4,12 @@ import (
 	accountV1 "buf.build/gen/go/materials-resources/prophet/grpc/go/account/v1/accountv1grpc"
 	inventoryV1 "buf.build/gen/go/materials-resources/prophet/grpc/go/inventory/v1/inventoryv1grpc"
 	orderV1 "buf.build/gen/go/materials-resources/prophet/grpc/go/order/v1/orderv1grpc"
+	"buf.build/gen/go/materials-resources/prophet/grpc/go/warehouse/v1/warehousev1grpc"
 	"fmt"
 	"github.com/materials-resources/Service-Prophet/core/services/account"
 	"github.com/materials-resources/Service-Prophet/core/services/inventory"
 	"github.com/materials-resources/Service-Prophet/core/services/order"
+	"github.com/materials-resources/Service-Prophet/core/services/warehouse"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -33,6 +35,7 @@ func run() error {
 	accountV1.RegisterAccountServiceServer(server, &account.Server{DB: database})
 	inventoryV1.RegisterInventoryServiceServer(server, &inventory.Server{DB: database})
 	orderV1.RegisterOrderServiceServer(server, &order.Server{DB: database})
+	warehousev1grpc.RegisterWarehouseServiceServer(server, &warehouse.Server{DB: database})
 
 	reflection.Register(server)
 

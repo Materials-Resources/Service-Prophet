@@ -3,8 +3,8 @@ module github.com/materials-resources/Service-Prophet
 go 1.19
 
 require (
-	buf.build/gen/go/materials-resources/prophet/grpc/go v1.2.0-20230125175044-6a7d495f4c4c.4
-	buf.build/gen/go/materials-resources/prophet/protocolbuffers/go v1.28.1-20230125175044-6a7d495f4c4c.4
+	buf.build/gen/go/materials-resources/prophet/grpc/go v1.2.0-20230201203221-95ca77680eb7.4
+	buf.build/gen/go/materials-resources/prophet/protocolbuffers/go v1.28.1-20230201203221-95ca77680eb7.4
 	github.com/microsoft/go-mssqldb v0.19.0
 	github.com/uptrace/bun v1.1.10
 	github.com/uptrace/bun/dialect/mssqldialect v1.1.10

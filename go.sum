@@ -1,7 +1,7 @@
-buf.build/gen/go/materials-resources/prophet/grpc/go v1.2.0-20230125175044-6a7d495f4c4c.4 h1:CvGJLje2lWrJHq62SSy+O+qIO67WXJnY+LU5BIiwOtc=
-buf.build/gen/go/materials-resources/prophet/grpc/go v1.2.0-20230125175044-6a7d495f4c4c.4/go.mod h1:xC0f7YKZK3O4Hc7cta7/IVptvJWNEkf+e6NUi7PO/dA=
-buf.build/gen/go/materials-resources/prophet/protocolbuffers/go v1.28.1-20230125175044-6a7d495f4c4c.4 h1:TsHprvLrFQjnxjsoKIT8KfMWzI5XxIMbWecaFh0CGwg=
-buf.build/gen/go/materials-resources/prophet/protocolbuffers/go v1.28.1-20230125175044-6a7d495f4c4c.4/go.mod h1:SPvQrw53av6/3zLlgHIcdNBOopThmnZuMpKPd4B524I=
+buf.build/gen/go/materials-resources/prophet/grpc/go v1.2.0-20230201203221-95ca77680eb7.4 h1:ZU6NxGli1QKEYCCUZuqji9e8FhkcxgmbTc/EBJu//uY=
+buf.build/gen/go/materials-resources/prophet/grpc/go v1.2.0-20230201203221-95ca77680eb7.4/go.mod h1:bZBwxRMCA3fLJi5ZbwFJDh9eFfSzk1Tkt/mKeIKqvIk=
+buf.build/gen/go/materials-resources/prophet/protocolbuffers/go v1.28.1-20230201203221-95ca77680eb7.4 h1:dF46HA9zHhs3cTN5UmSaWOjIlq+cB+E+Jj7qxJ1EQX0=
+buf.build/gen/go/materials-resources/prophet/protocolbuffers/go v1.28.1-20230201203221-95ca77680eb7.4/go.mod h1:SPvQrw53av6/3zLlgHIcdNBOopThmnZuMpKPd4B524I=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/Azure/azure-sdk-for-go/sdk/azcore v1.0.0/go.mod h1:uGG2W01BaETf0Ozp+QxxKJdMBNRWPdstHG0Fmdwn1/U=
